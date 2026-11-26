@@ -1,0 +1,2 @@
+{"id":"synthetic-001","split":"example_only","question":"합성 예제 서비스의 보고 주기는?","reference_answer":"7일","allowed_source_ids":["synthetic-doc-01"],"expected_behavior":"ANSWER_WITH_SOURCE","kind":"answerable","data_kind":"synthetic","source_text":"합성 예제 서비스는 보고서를 7일마다 생성한다."}
+{"id":"synthetic-002","split":"example_only","question":"합성 예제의 현재 운영 장애는?","reference_answer":null,"allowed_source_ids":[],"expected_behavior":"ABSTAIN_OR_REQUEST_LIVE_SOURCE","kind":"current_state_unknown","data_kind":"synthetic"}
