@@ -48,6 +48,18 @@ class ProgressTests(unittest.TestCase):
         self.data["stages"][0]["guide"] = "docs/stages/AX-00-../../README.md"
         self.assertTrue(any("guide missing" in e for e in validate(self.data)))
 
+    def test_horizon_mismatch_rejected(self):
+        self.data["stages"][1]["horizon"] = "long"
+        self.assertTrue(any("plan identity" in e for e in validate(self.data)))
+
+    def test_reorder_rejected(self):
+        self.data["stages"][1], self.data["stages"][2] = self.data["stages"][2], self.data["stages"][1]
+        self.assertTrue(any("plan identity" in e for e in validate(self.data)))
+
+    def test_defer_deployment_without_learning_rejected(self):
+        self.data["stages"][0].update(deployment="DEFERRED", approval_ref="fixture", defer_reason="fixture")
+        self.assertTrue(any("deployment requires" in e for e in validate(self.data)))
+
     def test_valid_transition(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)

@@ -1,0 +1,137 @@
+{
+  "schema_version": 2,
+  "stages": [
+    {
+      "id": "AX-00",
+      "horizon": "short",
+      "title": "사전 점검",
+      "guide": "docs/stages/AX-00-preflight.md"
+    },
+    {
+      "id": "AX-11",
+      "horizon": "short",
+      "title": "LLM 기본기·Python·FastAPI·Hugging Face",
+      "guide": "docs/stages/AX-11-llm-foundation.md"
+    },
+    {
+      "id": "AX-01",
+      "horizon": "short",
+      "title": "Langfuse·OpenTelemetry",
+      "guide": "docs/stages/AX-01-langfuse.md"
+    },
+    {
+      "id": "AX-02",
+      "horizon": "short",
+      "title": "Ragas·평가 데이터셋",
+      "guide": "docs/stages/AX-02-ragas.md"
+    },
+    {
+      "id": "AX-03",
+      "horizon": "short",
+      "title": "Promptfoo·OWASP AI 보안",
+      "guide": "docs/stages/AX-03-promptfoo.md"
+    },
+    {
+      "id": "AX-12",
+      "horizon": "short",
+      "title": "임베딩·하이브리드 검색·Reranker",
+      "guide": "docs/stages/AX-12-retrieval-quality.md"
+    },
+    {
+      "id": "AX-05",
+      "horizon": "short",
+      "title": "Structured Output·Tool Calling",
+      "guide": "docs/stages/AX-05-tool-calling.md"
+    },
+    {
+      "id": "AX-04",
+      "horizon": "short",
+      "title": "MCP 서버",
+      "guide": "docs/stages/AX-04-mcp.md"
+    },
+    {
+      "id": "AX-06",
+      "horizon": "short",
+      "title": "n8n 업무 자동화",
+      "guide": "docs/stages/AX-06-n8n.md"
+    },
+    {
+      "id": "AX-07",
+      "horizon": "short",
+      "title": "LangGraph·에이전트 상태 관리",
+      "guide": "docs/stages/AX-07-langgraph.md"
+    },
+    {
+      "id": "AX-13",
+      "horizon": "mid",
+      "title": "문서 ETL·Docling·OCR·VLM",
+      "guide": "docs/stages/AX-13-document-pipeline.md"
+    },
+    {
+      "id": "AX-14",
+      "horizon": "mid",
+      "title": "기업 시스템 연동·SSO/RBAC",
+      "guide": "docs/stages/AX-14-enterprise-integration.md"
+    },
+    {
+      "id": "AX-15",
+      "horizon": "mid",
+      "title": "Redis·비동기 큐·서비스 복원력",
+      "guide": "docs/stages/AX-15-resilience.md"
+    },
+    {
+      "id": "AX-08",
+      "horizon": "mid",
+      "title": "LiteLLM",
+      "guide": "docs/stages/AX-08-litellm.md"
+    },
+    {
+      "id": "AX-10",
+      "horizon": "mid",
+      "title": "pgvector",
+      "guide": "docs/stages/AX-10-pgvector.md"
+    },
+    {
+      "id": "AX-16",
+      "horizon": "mid",
+      "title": "클라우드·CI/CD·컨테이너 운영",
+      "guide": "docs/stages/AX-16-cloud-ops.md"
+    },
+    {
+      "id": "AX-17",
+      "horizon": "mid",
+      "title": "NumPy·Pandas·scikit-learn·PyTorch",
+      "guide": "docs/stages/AX-17-ml-basics.md"
+    },
+    {
+      "id": "AX-18",
+      "horizon": "mid",
+      "title": "PEFT·LoRA·QLoRA",
+      "guide": "docs/stages/AX-18-finetuning.md"
+    },
+    {
+      "id": "AX-09",
+      "horizon": "long",
+      "title": "vLLM·추론 최적화",
+      "guide": "docs/stages/AX-09-vllm.md"
+    },
+    {
+      "id": "AX-19",
+      "horizon": "long",
+      "title": "MLflow·모델 생명주기",
+      "guide": "docs/stages/AX-19-mlops.md"
+    },
+    {
+      "id": "AX-20",
+      "horizon": "long",
+      "title": "AX 종합 실무·면접 검증",
+      "guide": "docs/stages/AX-20-capstone.md"
+    },
+    {
+      "id": "AX-21",
+      "horizon": "long",
+      "title": "지속 개선·신기술 비교",
+      "guide": "docs/stages/AX-21-continuous.md"
+    }
+  ]
+}

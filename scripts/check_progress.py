@@ -5,26 +5,31 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TERMINAL = {"VERIFIED", "DEFERRED"}
+TERMINAL = {"VERIFIED"}
 ACTIVE = {"READY", "IN_PROGRESS", "BLOCKED"}
 DEPLOYMENT = {"NOT_APPLIED", "PILOT", "APPROVED_LIVE", "DEFERRED"}
 
 
 def validate(data, root=ROOT):
-    if not isinstance(data, dict) or data.get("schema_version") != 1:
+    if not isinstance(data, dict) or data.get("schema_version") != 2:
         return ["unsupported schema_version"]
+    try:
+        plan = json.loads((ROOT / "state/stage-plan.json").read_text(encoding="utf-8"))["stages"]
+    except (OSError, ValueError, KeyError, TypeError):
+        return ["stage plan missing or invalid"]
     stages = data.get("stages")
-    if not isinstance(stages, list) or len(stages) != 11:
-        return ["expected 11 stages"]
+    if not isinstance(stages, list) or len(stages) != len(plan) or len(plan) != 22:
+        return ["expected 22 stages"]
     errors = []
     unfinished = False
     for i, s in enumerate(stages):
-        sid = f"AX-{i:02d}"
+        expected = plan[i]
+        sid = expected["id"]
         if not isinstance(s, dict):
             errors.append(f"{sid}: invalid record")
             continue
-        if s.get("id") != sid or s.get("conditional") is not (i >= 8):
-            errors.append(f"{sid}: ID or conditional policy mismatch")
+        if any(s.get(key) != expected[key] for key in ("id", "horizon", "title", "guide")) or s.get("conditional") is not False:
+            errors.append(f"{sid}: plan identity/order or mandatory-learning policy mismatch")
         status = s.get("status")
         if status not in TERMINAL | ACTIVE | {"PENDING"}:
             errors.append(f"{sid}: invalid status")
@@ -42,13 +47,15 @@ def validate(data, root=ROOT):
         if status in TERMINAL | {"IN_PROGRESS", "BLOCKED"}:
             if not safe_file(root, s.get("report"), "records", prefix=sid + "-"):
                 errors.append(f"{sid}: existing stage report required")
-        if status == "DEFERRED" and (i < 8 or not nonempty(s.get("defer_reason")) or not nonempty(s.get("approval_ref"))):
-            errors.append(f"{sid}: deferral requires conditional stage, reason and user approval")
+        if status == "DEFERRED":
+            errors.append(f"{sid}: deferral requires completed learning; defer deployment only")
         deployment = s.get("deployment")
         if deployment not in DEPLOYMENT:
             errors.append(f"{sid}: invalid deployment status")
-        if deployment in {"PILOT", "APPROVED_LIVE"} and (status != "VERIFIED" or not nonempty(s.get("approval_ref"))):
+        if deployment in {"PILOT", "APPROVED_LIVE", "DEFERRED"} and (status != "VERIFIED" or not nonempty(s.get("approval_ref"))):
             errors.append(f"{sid}: deployment requires verification and approval reference")
+        if deployment == "DEFERRED" and not nonempty(s.get("defer_reason")):
+            errors.append(f"{sid}: deployment deferral reason required")
         if status not in TERMINAL:
             unfinished = True
     return errors
@@ -82,13 +89,13 @@ def main():
     next_stage = next((s for s in data["stages"] if s["status"] not in TERMINAL), None)
     print("PASS: roadmap state structure and sequence")
     if next_stage:
-        print(f"CURRENT: {next_stage['id']} / {next_stage['title']} / {next_stage['status']}")
+        print(f"CURRENT: {next_stage['id']} / {next_stage['horizon']} / {next_stage['title']} / {next_stage['status']}")
         print(f"GUIDE: {next_stage['guide']}")
         print(f"NEXT: {next_stage['next_action']}")
         if next_stage["status"] == "BLOCKED":
             print(f"BLOCKER: {next_stage['blocker']}")
     else:
-        print("All stages verified or approved for deferral; review operational metrics separately.")
+        print("All 22 initial stages verified; continue operational measurement and review.")
     print("NOTE: structural validation only; not product verification or deployment approval.")
     return 0
 
