@@ -9,3 +9,6 @@
 - [ ] 작은 모델/토크나이저 직접 실행과 비교 기록
 - [ ] Python API 정상·오류·타임아웃·취소 테스트와 코드 설명
 - [ ] 독립적으로 데이터 흐름과 모델/API 선택 근거를 설명 가능. 미확인 사용자 이해는 별도 표시.
+
+## V3 원리 심화 및 독립 평가
+토큰화, 임베딩, Transformer/Attention, 자기회귀 생성, 문맥 길이, sampling(temperature/top-p), KV cache, quantization, fine-tuning의 역할과 한계를 설명한다. 토큰 수·추론 설정·응답 시간 실측, 작은 attention 계산 또는 시각화, 모델 호출 실패 디버깅을 수행한다. 사용자에게 정답 없이 작은 Python/FastAPI 수정 및 테스트 문제를 제시한다. GPU 의존 실측은 AX-09, 미세조정 실측은 AX-18에서 재검증하며 이 단계에서 수행하지 않은 실험을 완료로 주장하지 않는다. `docs/08-v3-depth-and-ax.md` 기준 적용.
